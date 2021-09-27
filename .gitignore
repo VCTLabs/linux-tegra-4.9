@@ -118,3 +118,11 @@ all.config
 
 # fetched Android config fragments
 kernel/configs/android-*.cfg
+.vscode*
+build/
+modules/
+*.*bz2*
+nv*.sh
+public_sources_sha.txt
+#*vc_mipi*
+#*vc-mipi*
