@@ -90,6 +90,13 @@ config VIDEO_OV9281
 	  To compile this driver as a module, choose M here: the module
 	  will be called ov9281.
 
+config VIDEO_VCMIPI
+	tristate "Vision Components MIPI CSI-2 driver"
+	depends on I2C && VIDEO_V4L2 && VIDEO_V4L2_SUBDEV_API
+	---help---
+	  This is a Video4Linux2 sensor driver for several different
+	  camera sensors (eg, IMX412) for use with the tegra isp.
+
 config VIDEO_OV10823
 	tristate "OmniVision OV10823 camera sensor support"
 	depends on I2C && VIDEO_V4L2 && VIDEO_V4L2_SUBDEV_API
