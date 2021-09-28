@@ -118,6 +118,8 @@ struct sensor_signal_properties {
 };
 
 struct sensor_image_properties {
+	__u32 top;
+	__u32 left;
 	__u32 width;
 	__u32 height;
 	__u32 line_length;
