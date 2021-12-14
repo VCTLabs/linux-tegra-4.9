@@ -13,9 +13,13 @@
  * more details.
  */
 
+#define VC_MIPI 1
+
 #include <t18x-common-platforms/tegra186-quill-common-p3310-1000-a00.dtsi>
 #include <t18x-common-platforms/tegra186-quill-power-tree-p3310-1000-a00-00.dtsi>
-#include <t18x-common-platforms/tegra186-quill-camera-modules.dtsi>
+#if !VC_MIPI
+    #include <t18x-common-platforms/tegra186-quill-camera-modules.dtsi>
+#endif
 #include <t18x-common-modules/tegra186-display-e3320-1000-a00.dtsi>
 
 /* comms dtsi file should be included after gpio dtsi file */
@@ -24,7 +28,9 @@
 #include <t18x-common-modules/tegra186-super-module-e2614-p2597-1000-a00.dtsi>
 #include <t18x-common-plugin-manager/tegra186-quill-display-plugin-manager.dtsi>
 #include <t18x-common-prod/tegra186-priv-quill-p3310-1000-a00-prod.dtsi>
-#include <t18x-common-plugin-manager/tegra186-quill-camera-plugin-manager.dtsi>
+#if !VC_MIPI
+    #include <t18x-common-plugin-manager/tegra186-quill-camera-plugin-manager.dtsi>
+#endif
 
 / {
 	model = "quill";
@@ -349,4 +355,8 @@
 
 #if LINUX_VERSION >= 414
 #include <tegra186-linux-4.14.dtsi>
+#endif
+
+#if VC_MIPI
+  #include <t18x-common-modules/tegra186-camera-vc-mipi-cam.dtsi>
 #endif
