@@ -235,6 +235,14 @@ static int extract_pixel_format(
 		*format = V4L2_PIX_FMT_UYVY;
 	else if (strncmp(pixel_t, "yuv_vyuy16", size) == 0)
 		*format = V4L2_PIX_FMT_VYUY;
+	else if (strncmp(pixel_t, "gray", size) == 0)
+		*format = V4L2_PIX_FMT_GREY;
+	else if (strncmp(pixel_t, "y10", size) == 0)
+		*format = V4L2_PIX_FMT_Y10;
+	else if (strncmp(pixel_t, "y12", size) == 0)
+		*format = V4L2_PIX_FMT_Y12;
+	else if (strncmp(pixel_t, "bayer_rggb8", size) == 0)
+		*format = V4L2_PIX_FMT_SRGGB8;
 	else {
 		pr_err("%s: Need to extend format%s\n", __func__, pixel_t);
 		return -EINVAL;
