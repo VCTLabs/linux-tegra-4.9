@@ -1086,7 +1086,7 @@ static int vi4_channel_start_streaming(struct vb2_queue *vq, u32 count)
 	}
 
 	chan->sequence = 0;
-	chan->timeout = msecs_to_jiffies(200);
+	chan->timeout = msecs_to_jiffies(5000);
 	if (!chan->low_latency)
 		tegra_channel_init_ring_buffer(chan);
 
