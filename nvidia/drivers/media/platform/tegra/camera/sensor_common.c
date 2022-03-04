@@ -241,6 +241,8 @@ static int extract_pixel_format(
 		*format = V4L2_PIX_FMT_Y10;
 	else if (strncmp(pixel_t, "y12", size) == 0)
 		*format = V4L2_PIX_FMT_Y12;
+	else if (strncmp(pixel_t, "y14", size) == 0)
+		*format = V4L2_PIX_FMT_Y14;
 	else if (strncmp(pixel_t, "bayer_rggb8", size) == 0)
 		*format = V4L2_PIX_FMT_SRGGB8;
 	else {

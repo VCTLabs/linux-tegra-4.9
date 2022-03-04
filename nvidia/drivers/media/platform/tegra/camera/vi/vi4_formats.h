@@ -122,6 +122,10 @@ static const struct tegra_video_format vi4_video_formats[] = {
 	TEGRA_VIDEO_FORMAT(RAW12, 12, SBGGR12_1X12, 2, 1, T_R16_I,
 				RAW12, SBGGR12, "BGBG.. GRGR.."),
 
+	/* RAW 14 */
+	TEGRA_VIDEO_FORMAT(RAW14, 14, Y14_1X14, 2, 1, T_R16_I,
+				RAW14, Y14, "GRAY14"),
+
 	/* RGB888 */
 	TEGRA_VIDEO_FORMAT(RGB888, 24, RGB888_1X24, 4, 1, T_A8R8G8B8,
 				RGB888, ABGR32, "BGRA-8-8-8-8"),
