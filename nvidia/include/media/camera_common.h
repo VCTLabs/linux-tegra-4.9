@@ -193,7 +193,7 @@ struct tegracam_ctrl_ops {
 	const u32 *ctrl_cid_list;
 	bool is_blob_supported;
 	int (*set_trigger_mode)(struct tegracam_device *tc_dev, s64 val);
-	int (*set_flash_mode)(struct tegracam_device *tc_dev, s64 val);
+	int (*set_io_mode)(struct tegracam_device *tc_dev, s64 val);
 	int (*set_black_level)(struct tegracam_device *tc_dev, s64 val);
 	int (*set_gain)(struct tegracam_device *tc_dev, s64 val);
 	int (*set_exposure)(struct tegracam_device *tc_dev, s64 val);

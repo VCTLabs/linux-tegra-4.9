@@ -186,12 +186,12 @@ static struct v4l2_ctrl_config ctrl_cfg_list[] = {
 	},
 	{
 		.ops = &tegracam_ctrl_ops,
-		.id = TEGRA_CAMERA_CID_FLASH_MODE,
-		.name = "Flash Mode",
+		.id = TEGRA_CAMERA_CID_IO_MODE,
+		.name = "IO Mode",
 		.type = V4L2_CTRL_TYPE_INTEGER64,
 		.flags = V4L2_CTRL_FLAG_SLIDER,
 		.min = 0,
-		.max = 2,
+		.max = 5,
 		.step = 1,
 	},
 	{
@@ -341,8 +341,8 @@ static int tegracam_set_ctrls(struct tegracam_ctrl_handler *handler,
 	case TEGRA_CAMERA_CID_TRIGGER_MODE:
 		err = ops->set_trigger_mode(tc_dev, *ctrl->p_new.p_s64);
 		break;
-	case TEGRA_CAMERA_CID_FLASH_MODE:
-		err = ops->set_flash_mode(tc_dev, *ctrl->p_new.p_s64);
+	case TEGRA_CAMERA_CID_IO_MODE:
+		err = ops->set_io_mode(tc_dev, *ctrl->p_new.p_s64);
 		break;
 	case TEGRA_CAMERA_CID_BLACK_LEVEL:
 		err = ops->set_black_level(tc_dev, *ctrl->p_new.p_s64);
@@ -696,11 +696,11 @@ static int tegracam_check_ctrl_ops(
 			if (ops->set_trigger_mode != NULL)
 				sensor_ops++;
 			break;
-		case TEGRA_CAMERA_CID_FLASH_MODE:
-			if (ops->set_flash_mode == NULL)
+		case TEGRA_CAMERA_CID_IO_MODE:
+			if (ops->set_io_mode == NULL)
 				dev_err(dev,
-					"Missing TEGRA_CAMERA_CID_FLASH_MODE implementation\n");
-			if (ops->set_flash_mode != NULL)
+					"Missing TEGRA_CAMERA_CID_IO_MODE implementation\n");
+			if (ops->set_io_mode != NULL)
 				sensor_ops++;
 			break;
 		case TEGRA_CAMERA_CID_BLACK_LEVEL:
@@ -889,11 +889,11 @@ static int tegracam_check_ctrl_cids(struct tegracam_ctrl_handler *handler)
 		}
 	}
 
-	if (ops->set_flash_mode != NULL) {
+	if (ops->set_io_mode != NULL) {
 		if (!find_matching_cid(ops->ctrl_cid_list,
 			ops->numctrls,
-			TEGRA_CAMERA_CID_FLASH_MODE)) {
-			dev_err(dev, "Missing TEGRA_CAMERA_CID_FLASH_MODE registration\n");
+			TEGRA_CAMERA_CID_IO_MODE)) {
+			dev_err(dev, "Missing TEGRA_CAMERA_CID_IO_MODE registration\n");
 			errors_found++;
 		}
 	}
