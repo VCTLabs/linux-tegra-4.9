@@ -178,8 +178,8 @@ static struct v4l2_ctrl_config ctrl_cfg_list[] = {
 		.ops = &tegracam_ctrl_ops,
 		.id = TEGRA_CAMERA_CID_TRIGGER_MODE,
 		.name = "Trigger Mode",
-		.type = V4L2_CTRL_TYPE_INTEGER64,
-		.flags = V4L2_CTRL_FLAG_SLIDER,
+		.type = V4L2_CTRL_TYPE_INTEGER,
+		.flags = 0,
 		.min = 0,
 		.max = 7,
 		.step = 1,
@@ -188,8 +188,8 @@ static struct v4l2_ctrl_config ctrl_cfg_list[] = {
 		.ops = &tegracam_ctrl_ops,
 		.id = TEGRA_CAMERA_CID_IO_MODE,
 		.name = "IO Mode",
-		.type = V4L2_CTRL_TYPE_INTEGER64,
-		.flags = V4L2_CTRL_FLAG_SLIDER,
+		.type = V4L2_CTRL_TYPE_INTEGER,
+		.flags = 0,
 		.min = 0,
 		.max = 5,
 		.step = 1,
@@ -198,11 +198,22 @@ static struct v4l2_ctrl_config ctrl_cfg_list[] = {
 		.ops = &tegracam_ctrl_ops,
 		.id = TEGRA_CAMERA_CID_BLACK_LEVEL,
 		.name = "Black Level",
-		.type = V4L2_CTRL_TYPE_INTEGER64,
+		.type = V4L2_CTRL_TYPE_INTEGER,
 		.flags = V4L2_CTRL_FLAG_SLIDER,
 		.min = CTRL_U32_MIN,
 		.max = CTRL_U32_MAX,
 		.def = CTRL_U32_MIN,
+		.step = 1,
+	},
+	{
+		.ops = &tegracam_ctrl_ops,
+		.id = TEGRA_CAMERA_CID_SINGLE_TRIGGER,
+		.name = "Single Trigger",
+		.type = V4L2_CTRL_TYPE_BUTTON,
+		.flags = 0,
+		.min = 0,
+		.max = 1,
+		.def = 0,
 		.step = 1,
 	},
 };
@@ -346,6 +357,9 @@ static int tegracam_set_ctrls(struct tegracam_ctrl_handler *handler,
 		break;
 	case TEGRA_CAMERA_CID_BLACK_LEVEL:
 		err = ops->set_black_level(tc_dev, *ctrl->p_new.p_s64);
+		break;
+	case TEGRA_CAMERA_CID_SINGLE_TRIGGER:
+		err = ops->set_single_trigger(tc_dev, ctrl->val);
 		break;
 	case TEGRA_CAMERA_CID_GAIN:
 		err = ops->set_gain(tc_dev, *ctrl->p_new.p_s64);
@@ -710,6 +724,13 @@ static int tegracam_check_ctrl_ops(
 			if (ops->set_black_level != NULL)
 				sensor_ops++;
 			break;
+		case TEGRA_CAMERA_CID_SINGLE_TRIGGER:
+			if (ops->set_single_trigger == NULL)
+				dev_err(dev,
+					"Missing TEGRA_CAMERA_CID_SINGLE_TRIGGER implementation\n");
+			if (ops->set_single_trigger != NULL)
+				sensor_ops++;
+			break;
 		case TEGRA_CAMERA_CID_GAIN:
 			if (ops->set_gain == NULL && ops->set_gain_ex == NULL)
 				dev_err(dev,
@@ -903,6 +924,15 @@ static int tegracam_check_ctrl_cids(struct tegracam_ctrl_handler *handler)
 			ops->numctrls,
 			TEGRA_CAMERA_CID_BLACK_LEVEL)) {
 			dev_err(dev, "Missing TEGRA_CAMERA_CID_BLACK_LEVEL registration\n");
+			errors_found++;
+		}
+	}
+
+	if (ops->set_single_trigger != NULL) {
+		if (!find_matching_cid(ops->ctrl_cid_list,
+			ops->numctrls,
+			TEGRA_CAMERA_CID_SINGLE_TRIGGER)) {
+			dev_err(dev, "Missing TEGRA_CAMERA_CID_SINGLE_TRIGGER registration\n");
 			errors_found++;
 		}
 	}

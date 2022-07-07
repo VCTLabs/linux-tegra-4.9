@@ -195,6 +195,7 @@ struct tegracam_ctrl_ops {
 	int (*set_trigger_mode)(struct tegracam_device *tc_dev, s64 val);
 	int (*set_io_mode)(struct tegracam_device *tc_dev, s64 val);
 	int (*set_black_level)(struct tegracam_device *tc_dev, s64 val);
+	int (*set_single_trigger)(struct tegracam_device *tc_dev, bool val);
 	int (*set_gain)(struct tegracam_device *tc_dev, s64 val);
 	int (*set_exposure)(struct tegracam_device *tc_dev, s64 val);
 	int (*set_exposure_short)(struct tegracam_device *tc_dev, s64 val);
