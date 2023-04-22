@@ -12,11 +12,19 @@
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
  * more details.
  */
+#define VC_CAMERA 1
+
 #include "common/tegra186-p3636-0001-common.dtsi"
 #include "common/tegra186-p3509-0000-cvb.dtsi"
 #include "common/tegra186-p3509-0000-a00-fixed-regulator.dtsi"
 #include "common/tegra186-p3636-0001-a00-prod.dtsi"
-#include "common/tegra186-camera-lanai-rbpcv2-imx219.dtsi"
+
+#if VC_CAMERA
+	#include "tegra186-camera-vc-mipi-cam.dtsi"
+//	#include "tegra186-camera-rbpcv2-vc-mipi.dtsi"
+#else
+	#include "common/tegra186-camera-lanai-rbpcv2-imx219.dtsi"
+#endif
 
 /* plugin manager */
 #include "common/tegra186-super-module-e2614-p3509-0000-a00.dtsi"
@@ -151,10 +159,6 @@
 		};
         };
 
-	mttcan@c310000 {
-		status = "okay";
-	};
-
 	cpufreq@e070000 {
 		cpu_emc_map =
 			< 499200  204000>,
@@ -203,10 +207,6 @@
 		dpaux@15040000 {
 			status = "okay";
 		};
-	};
-
-	i2c@c250000 {
-		status = "okay";
 	};
 };
 #if LINUX_VERSION >= 414
